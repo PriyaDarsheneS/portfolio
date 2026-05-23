@@ -638,6 +638,41 @@
             min-height: 420px;
         }
 
+        /* Improve framing: use explicit aspect-ratios so media scales predictably
+           and set object-fit: contain to show full designs without cropping */
+        .desktop-screen {
+            aspect-ratio: 16 / 9;
+            min-height: auto;
+            height: auto;
+            display: block;
+        }
+
+        .desktop-screen video,
+        .desktop-screen img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 auto !important;
+            background: #071028; /* subtle background for letterboxing */
+        }
+
+        .device-screen {
+            aspect-ratio: 9 / 19.5;
+            min-height: auto;
+            height: auto;
+        }
+
+        .device-screen video,
+        .device-screen img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 auto !important;
+            background: #071028;
+        }
+
         .device-screen video,
         .device-screen img {
             width: 100%;
@@ -830,7 +865,12 @@
                 display: none;
             }
 
+            /* Keep mobile menu hidden by default; show only when `.open` is added */
             .mobile-menu {
+                display: none;
+            }
+
+            .mobile-menu.open {
                 display: block;
                 position: fixed;
                 top: 100%;
@@ -1087,6 +1127,221 @@
         video::-webkit-media-controls-volume-slider {
             display: none;
         }
+
+        /* Responsive fixes: ensure hero and large frames reflow cleanly on tablets & phones */
+        img, video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero-title {
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                align-items: center;
+                min-height: auto;
+                padding-top: 1.5rem;
+            }
+
+            .hero-image-panel {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                margin-left: 0 !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+            }
+
+            .hero-image-wrap {
+                width: min(420px, 72vw) !important;
+                aspect-ratio: 4 / 5;
+                margin: 0 auto;
+                border-radius: 18px;
+                overflow: hidden;
+            }
+
+            .hero-copy-content {
+                margin-left: 0 !important;
+                padding: 0 1rem !important;
+                text-align: center !important;
+            }
+
+            .hero-title {
+                white-space: normal !important;
+            }
+
+            .profile-photo {
+                width: min(220px, 45vw) !important;
+                height: auto !important;
+                border-radius: 18px !important;
+            }
+
+            .hero-resume iframe {
+                min-height: 260px !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-inner {
+                gap: 1rem;
+                padding-top: 1rem;
+            }
+
+            .hero-title {
+                font-size: clamp(1.6rem, 8vw, 2.6rem) !important;
+                line-height: 1.05 !important;
+            }
+
+            .hero-copy {
+                font-size: 0.95rem !important;
+                line-height: 1.6 !important;
+            }
+
+            /* Scale device/phone frames to fit smaller screens without extra scrolling */
+            .device-frame {
+                max-width: min(360px, 86vw) !important;
+                width: min(360px, 86vw) !important;
+                margin: 0 auto !important;
+                padding: 10px !important;
+            }
+
+            .desktop-frame {
+                max-width: 100% !important;
+                padding: 12px !important;
+            }
+
+            .device-screen {
+                min-height: auto !important;
+                height: auto !important;
+                max-height: 60vh !important;
+                aspect-ratio: 9 / 19.5;
+                overflow: hidden !important;
+            }
+
+            .device-screen video,
+            .device-screen img {
+                width: 100% !important;
+                height: 100% !important;
+                max-height: 60vh !important;
+                object-fit: cover !important;
+                display: block !important;
+            }
+
+            .container {
+                width: calc(100% - 2rem) !important;
+                margin: 0 auto !important;
+                padding: 0 1rem !important;
+            }
+
+            .profile-meta span {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.25rem !important;
+                font-size: 0.86rem !important;
+            }
+        }
+
+        /* Target common phone widths to make phone-style showcases fit without vertical scroll */
+        @media (max-width: 430px) {
+            .device-frame {
+                width: 92vw !important;
+                max-width: 420px !important;
+            }
+            .device-screen {
+                max-height: 70vh !important;
+                min-height: auto !important;
+            }
+            .desktop-frame {
+                max-width: 92vw !important;
+                padding: 10px !important;
+            }
+            .desktop-screen {
+                max-height: 60vh !important;
+                min-height: auto !important;
+            }
+            .desktop-screen video,
+            .desktop-screen img {
+                object-fit: contain !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+
+        @media (max-width: 412px) {
+            .device-frame {
+                width: 94vw !important;
+                max-width: 400px !important;
+            }
+            .device-screen {
+                max-height: 66vh !important;
+            }
+            .device-screen video,
+            .device-screen img {
+                object-fit: cover !important;
+            }
+            .desktop-screen {
+                max-height: 56vh !important;
+                min-height: auto !important;
+            }
+            .desktop-screen video,
+            .desktop-screen img {
+                object-fit: contain !important;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .device-frame {
+                width: 96vw !important;
+                max-width: 380px !important;
+            }
+            .device-screen {
+                max-height: 64vh !important;
+            }
+            .desktop-screen {
+                max-height: 54vh !important;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .device-frame {
+                width: 96.5vw !important;
+                max-width: 370px !important;
+            }
+            .device-screen {
+                max-height: 62vh !important;
+            }
+            .hero-title {
+                font-size: clamp(1.4rem, 9vw, 2.4rem) !important;
+            }
+            .desktop-screen {
+                max-height: 52vh !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .device-frame {
+                width: 98vw !important;
+                max-width: 360px !important;
+                padding: 8px !important;
+            }
+            .device-screen {
+                max-height: 58vh !important;
+            }
+            .device-screen video,
+            .device-screen img {
+                object-fit: contain !important;
+            }
+            .desktop-screen {
+                max-height: 48vh !important;
+            }
+        }
     </style>
 </head>
 <body class="dot-grid">
@@ -1097,28 +1352,31 @@
 
     <!-- ─── NAVBAR ─── -->
     <nav class="navbar" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="logo">PD//</a>
-            <div class="hidden md:flex space-x-8">
+        <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="#hero" class="logo">
+                <img src="logo\profile_logo.png" alt="Profile Logo" class="w-10 h-10"/>
+            </a>
+            <div class="hidden md:flex space-x-8" style ="margin-left: 5px;">
                 <a href="#about" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">About</a>
                 <a href="#skills" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">Skills</a>
                 <a href="#projects" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">Projects</a>
+                <a href="#designs" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">Designs</a>
                 <a href="#experience" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">Experience</a>
-                <a href="#certs" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">Certs</a>
                 <a href="#contact" class="nav-link text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors" style="font-family: 'Share Tech Mono', monospace;">Contact</a>
-                <a href="#contact" class="btn-outline text-xs">Hire Me</a>
             </div>
             <button class="md:hidden text-cyan-400" id="hamburger">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu" id="mobile-menu" >
+            <div style="margin-left: 15px;">
             <a href="#about" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">About</a>
             <a href="#skills" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">Skills</a>
             <a href="#projects" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">Projects</a>
+            <a href="#designs" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">Designs</a>
             <a href="#experience" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">Experience</a>
-            <a href="#certs" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">Certs</a>
             <a href="#contact" class="block py-2 text-xs uppercase tracking-widest text-gray-400 hover:text-cyan-400" style="font-family: 'Share Tech Mono', monospace;">Contact</a>
+            </div>
         </div>
     </nav>
 
@@ -1404,83 +1662,6 @@
         </div>
     </section>
 
-    <!-- ─── EXPERIENCE ─── -->
-    <section id="experience" class="py-20 px-6">
-        <div class="container mx-auto max-w-4xl">
-            <div class="text-center mb-16 reveal">
-                <div class="text-xs uppercase tracking-widest text-cyan-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">Professional Journey</div>
-                <h2 class="text-3xl md:text-4xl font-bold">Internship <span class="text-cyan-400">Experience</span></h2>
-                <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-violet-400 mx-auto mt-4"></div>
-            </div>
-            <div class="relative">
-                <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400 via-violet-400 to-transparent"></div>
-                <div class="space-y-8">
-                    <div class="ml-14 glass p-6 rounded-lg reveal relative hover:-translate-y-1 transition-all">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-lg font-bold" style="font-family: 'Orbitron', monospace;">🔐 C++ Developer Intern (TechnoHacks EduTech Virtual Internship)</h3>
-                            <span class="tag tag-cyan">June–Aug 2024</span>
-                        </div>
-                            <div class="text-cyan-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">TechnoHacks EduTech</div>
-                        <p class="text-sm text-slate-800">As a C++ Development Intern, I built secure utility applications that emphasized algorithm accuracy and software reliability. One key project was a configurable password generator that balanced randomness with customizable complexity rules.</p>
-                        <ul class="list-disc ml-5 mt-4 text-sm space-y-2 text-slate-800">
-                            <li>Built modular password generation logic in C++ with secure character handling.</li>
-                            <li>Implemented configurable strength rules, randomness, and validation checks.</li>
-                            <li>Tested and debugged extensively to ensure reliability and maintainable code.</li>
-                        </ul>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="tag tag-cyan">C++</span>
-                            <span class="tag tag-violet">Algorithms</span>
-                            <span class="tag tag-pink">Secure Code</span>
-                        </div>
-                        <div class="absolute -left-3 top-6 w-3 h-3 bg-cyan-400 rounded-full shadow-glow-cyan"></div>
-                    </div>
-                    <div class="ml-14 glass p-6 rounded-lg reveal">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-lg font-bold" style="font-family: 'Orbitron', monospace;">Frontend Developer Intern</h3>
-                            <span class="tag tag-cyan">Jun–Aug 2025</span>
-                        </div>
-                        <div class="text-cyan-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">TechVision Studios</div>
-                        <p class="text-sm text-slate-800">Developed responsive web applications using React and Tailwind CSS. Collaborated with the design team to implement pixel-perfect UI components and optimized performance for a smoother user experience across devices.</p>
-                        <ul class="list-disc ml-5 mt-4 text-sm space-y-2 text-slate-800">
-                            <li>Built reusable UI components and responsive layouts.</li>
-                            <li>Improved application performance and page load speed.</li>
-                            <li>Participated in debugging, testing, and cross-functional design handoff.</li>
-                        </ul>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="tag tag-cyan">React</span>
-                            <span class="tag tag-violet">Tailwind</span>
-                            <span class="tag tag-pink">JavaScript</span>
-                        </div>
-                        <div class="absolute -left-3 top-6 w-3 h-3 bg-cyan-400 rounded-full shadow-glow-cyan"></div>
-                    </div>
-                    <div class="ml-14 glass p-6 rounded-lg reveal relative hover:-translate-y-1 transition-all">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-lg font-bold" style="font-family: 'Orbitron', monospace;">UI/UX Design Intern</h3>
-                            <span class="tag tag-violet">Jan–Mar 2024</span>
-                        </div>
-                        <div class="text-violet-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">DesignFlow Agency</div>
-                        <p class="text-sm text-slate-800">Created user-centered designs for mobile and web applications. Conducted user research, wireframing, and prototyping, then worked with developers to bring the final designs to life.</p>
-                        <ul class="list-disc ml-5 mt-4 text-sm space-y-2 text-slate-800">
-                            <li>Designed interfaces and interactive prototypes using Figma.</li>
-                            <li>Validated user flows through research and feedback sessions.</li>
-                            <li>Collaborated with developers for accurate and polished implementation.</li>
-                        </ul>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="tag tag-violet">Figma</span>
-                            <span class="tag tag-pink">Prototyping</span>
-                            <span class="tag tag-cyan">User Research</span>
-                            <span class="tag tag-orange">Wireframing</span>
-                        </div>
-                        <div class="absolute -left-3 top-6 w-3 h-3 bg-violet-400 rounded-full shadow-glow-violet"></div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
-
     <!-- ─── WORKSHOPS ─── -->
     <section id="workshops" class="py-20 px-6 bg-mid">
         <div class="container mx-auto max-w-6xl">
@@ -1685,7 +1866,7 @@
                 <div class="p-5">
                     <h3 class="text-xl font-semibold mb-2">Food Order Prototype Flow</h3>
                     <p class="text-sm text-slate-700">
-A user-centered food ordering prototype designed with intuitive navigation, clean visual hierarchy, and touch-friendly interactions for a seamless mobile experience. Smooth animated transitions and consistent UI elements were used to create a modern, engaging, and easy-to-use ordering flow.                    </p>
+                      A user-centered food ordering prototype designed with intuitive navigation, clean visual hierarchy, and touch-friendly interactions for a seamless mobile experience. Smooth animated transitions and consistent UI elements were used to create a modern, engaging, and easy-to-use ordering flow.                    </p>
                 </div>
             </div>
             <div class="glass overflow-hidden rounded-3xl border border-white/10 shadow-soft reveal">
@@ -1706,6 +1887,84 @@ A user-centered food ordering prototype designed with intuitive navigation, clea
     </div>
 
 </section>
+
+ <!-- ─── EXPERIENCE ─── -->
+    <section id="experience" class="py-20 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-16 reveal">
+                <div class="text-xs uppercase tracking-widest text-cyan-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">Professional Journey</div>
+                <h2 class="text-3xl md:text-4xl font-bold">Internship <span class="text-cyan-400">Experience</span></h2>
+                <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-400 to-violet-400 mx-auto mt-4"></div>
+            </div>
+            <div class="relative">
+                <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400 via-violet-400 to-transparent"></div>
+                <div class="space-y-8">
+                    <div class="ml-14 glass p-6 rounded-lg reveal relative hover:-translate-y-1 transition-all">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold" style="font-family: 'Orbitron', monospace;">🔐 C++ Developer Intern (TechnoHacks EduTech Virtual Internship)</h3>
+                            <span class="tag tag-cyan">June–Aug 2024</span>
+                        </div>
+                            <div class="text-cyan-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">TechnoHacks EduTech</div>
+                        <p class="text-sm text-slate-800">As a C++ Development Intern, I built secure utility applications that emphasized algorithm accuracy and software reliability. One key project was a configurable password generator that balanced randomness with customizable complexity rules.</p>
+                        <ul class="list-disc ml-5 mt-4 text-sm space-y-2 text-slate-800">
+                            <li>Built modular password generation logic in C++ with secure character handling.</li>
+                            <li>Implemented configurable strength rules, randomness, and validation checks.</li>
+                            <li>Tested and debugged extensively to ensure reliability and maintainable code.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tag tag-cyan">C++</span>
+                            <span class="tag tag-violet">Algorithms</span>
+                            <span class="tag tag-pink">Secure Code</span>
+                        </div>
+                        <div class="absolute -left-3 top-6 w-3 h-3 bg-cyan-400 rounded-full shadow-glow-cyan"></div>
+                    </div>
+                    <div class="ml-14 glass p-6 rounded-lg reveal">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold" style="font-family: 'Orbitron', monospace;">Frontend Developer Intern</h3>
+                            <span class="tag tag-cyan">Jun–Aug 2025</span>
+                        </div>
+                        <div class="text-cyan-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">TechVision Studios</div>
+                        <p class="text-sm text-slate-800">Developed responsive web applications using React and Tailwind CSS. Collaborated with the design team to implement pixel-perfect UI components and optimized performance for a smoother user experience across devices.</p>
+                        <ul class="list-disc ml-5 mt-4 text-sm space-y-2 text-slate-800">
+                            <li>Built reusable UI components and responsive layouts.</li>
+                            <li>Improved application performance and page load speed.</li>
+                            <li>Participated in debugging, testing, and cross-functional design handoff.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tag tag-cyan">React</span>
+                            <span class="tag tag-violet">Tailwind</span>
+                            <span class="tag tag-pink">JavaScript</span>
+                        </div>
+                        <div class="absolute -left-3 top-6 w-3 h-3 bg-cyan-400 rounded-full shadow-glow-cyan"></div>
+                    </div>
+                    <div class="ml-14 glass p-6 rounded-lg reveal relative hover:-translate-y-1 transition-all">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold" style="font-family: 'Orbitron', monospace;">UI/UX Design Intern</h3>
+                            <span class="tag tag-violet">Jan–Mar 2024</span>
+                        </div>
+                        <div class="text-violet-400 mb-2" style="font-family: 'Share Tech Mono', monospace;">DesignFlow Agency</div>
+                        <p class="text-sm text-slate-800">Created user-centered designs for mobile and web applications. Conducted user research, wireframing, and prototyping, then worked with developers to bring the final designs to life.</p>
+                        <ul class="list-disc ml-5 mt-4 text-sm space-y-2 text-slate-800">
+                            <li>Designed interfaces and interactive prototypes using Figma.</li>
+                            <li>Validated user flows through research and feedback sessions.</li>
+                            <li>Collaborated with developers for accurate and polished implementation.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tag tag-violet">Figma</span>
+                            <span class="tag tag-pink">Prototyping</span>
+                            <span class="tag tag-cyan">User Research</span>
+                            <span class="tag tag-orange">Wireframing</span>
+                        </div>
+                        <div class="absolute -left-3 top-6 w-3 h-3 bg-violet-400 rounded-full shadow-glow-violet"></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
 
     <!-- ─── ACADEMIC MARKS ─── -->
     <section id="academic" class="py-20 px-6 bg-mid">
